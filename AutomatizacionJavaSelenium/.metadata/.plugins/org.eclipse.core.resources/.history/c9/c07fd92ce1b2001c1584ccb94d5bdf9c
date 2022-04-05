@@ -1,0 +1,63 @@
+package AutomatizacionJavaSelenium;
+
+import static org.junit.Assert.assertEquals;
+
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+
+public class MainTest {
+
+	private WebDriver driver;
+	By localizadorDeBotonContactenos = By.linkText("Contáctenos");
+	By localizadorDePaginaContactenos = By.className("entry-title");
+	By localizadorDeNombre = By.name("your-name");
+	By localizadorDeEmail = By.name("your-email");
+	By localizadorDeAsunto = By.name("your-subject");
+	By localizadorDeMensaje = By.name("your-message");
+	By localizadorDeCaptcha = By.name("captcha-636");// Evitar repetir logica
+	
+	By localizadorBotonEnviar = By.className("wpcf7-submit");
+	
+	WebElement localizadorDireccionInvalida = driver.findElement(By.xpath("//*[@id=\"wpcf7-f1297-p370-o1\"]/form/p[2]/span/span"));
+
+	@Before
+	
+	public void setUp() {
+		driver = Utilidades.configuracion(driver);
+	}
+	
+	@After
+	
+	public void tearDown() throws Exception{
+		//driver.quit();
+	}
+	
+	@Test
+	
+	public void completarFormularioDeContacto(Localizador unLocalizador) throws InterruptedException{
+		
+		Driver.entrarAContactenos(driver, unLocalizador);// Clickea en contactenos
+		Thread.sleep(2000); // 2 seg de espera
+		
+		if(Driver.logroEntrarAContactenos(driver,unLocalizador)) { // Si entro a contactenos
+			
+			Driver.llenarCamposYEnviar(driver,unLocalizador);
+			Thread.sleep(2000);
+			
+			
+			if(localizadorDireccionInvalida.isDisplayed()) {
+				assertEquals("La dirección e-mail parece inválida.", localizadorDireccionInvalida.getText());
+			}
+			
+		}else {
+			System.out.print("No entro a la pagina de contacto");
+		}
+		
+	}
+}

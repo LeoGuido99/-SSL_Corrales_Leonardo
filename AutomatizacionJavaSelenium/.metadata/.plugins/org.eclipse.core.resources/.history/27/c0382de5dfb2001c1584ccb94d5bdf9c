@@ -1,0 +1,16 @@
+package AutomatizacionJavaSelenium;
+
+import org.openqa.selenium.WebDriver;
+
+public class Driver {
+	public static void llenarCamposYEnviar(WebDriver driver,Localizador unLocalizador) {
+		driver.findElement(unLocalizador.localizarSegunNombre("your-name")).sendKeys("Leonardo Corrales");
+		driver.findElement(unLocalizador.localizarSegunNombre("your-email")).sendKeys("direccionInvalida@gmail.com.");
+		driver.findElement(unLocalizador.localizarSegunNombre("your-subject")).sendKeys("Busco empleo en su empresa");
+		driver.findElement(unLocalizador.localizarSegunNombre("your-message")).sendKeys("Buenas estaria interesado en un puesto como developer");
+		driver.findElement(unLocalizador.localizarSegunNombre("captcha-636")).sendKeys("----");
+		
+		driver.findElement(localizadorBotonEnviar).click();
+		Thread.sleep(2000);
+	}
+}

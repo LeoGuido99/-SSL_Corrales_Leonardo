@@ -1,0 +1,50 @@
+package AutomatizacionJavaSelenium;
+
+import static org.junit.Assert.assertEquals;
+
+import org.openqa.selenium.WebDriver;
+
+public class Driver {
+	
+	public static void llenarCamposYEnviar(WebDriver driver) {
+		driver.findElement(Localizador.localizarSegunNombre("your-name")).sendKeys("Leonardo Corrales");
+		driver.findElement(Localizador.localizarSegunNombre("your-email")).sendKeys("direccionInvalida@gmail.com.");
+		driver.findElement(Localizador.localizarSegunNombre("your-subject")).sendKeys("Busco empleo en su empresa");
+		driver.findElement(Localizador.localizarSegunNombre("your-message")).sendKeys("Buenas estaria interesado en un puesto como developer");
+		driver.findElement(Localizador.localizarSegunNombre("captcha-636")).sendKeys("----");
+		
+		driver.findElement(Localizador.localizadorBotonEnviar).click();
+	}
+	
+	public static void chequeoDireccionInvalida(){
+		if(Localizador.localizadorDireccionInvalida.isDisplayed()) {
+			assertEquals("La dirección e-mail parece inválida.", Localizador.localizadorDireccionInvalida.getText());
+		}
+	}
+	
+	public static void entrarAContactenos(WebDriver driver) {
+		driver.findElement(Localizador.localizadorDeBotonContactenos).click();
+	}
+	
+	public static boolean logroEntrarAContactenos(WebDriver driver) {
+		return driver.findElement(Localizador.localizadorDePaginaContactenos).isDisplayed();
+	}
+	
+	public static void realizarTest(WebDriver driver) throws InterruptedException{
+		
+		entrarAContactenos(driver);// Clickea en contactenos
+		Thread.sleep(2000); // 2 seg de espera
+		
+		if(logroEntrarAContactenos(driver)) { // Si entro a contactenos
+			
+			llenarCamposYEnviar(driver);
+			Thread.sleep(2000);
+			
+			chequeoDireccionInvalida();
+			
+		}else {
+			System.out.print("No entro a la pagina de contacto");
+		}
+		
+	}
+}

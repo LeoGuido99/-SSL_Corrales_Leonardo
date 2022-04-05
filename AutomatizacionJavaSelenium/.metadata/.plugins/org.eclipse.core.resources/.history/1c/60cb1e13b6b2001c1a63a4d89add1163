@@ -1,0 +1,71 @@
+package AutomatizacionJavaSelenium;
+
+import static org.junit.Assert.assertEquals;
+
+import java.util.List;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class TestDireccionInvalida {
+
+	private WebDriver driver;
+	By localizadorDeBotonContactenos = By.linkText("Contáctenos");
+	By localizadorDePaginaContactenos = By.className("entry-title");
+	By localizadorDeNombre = By.name("your-name");
+	By localizadorDeEmail = By.name("your-email");
+	By localizadorDeAsunto = By.name("your-subject");
+	By localizadorDeMensaje = By.name("your-message");
+	By localizadorDeCaptcha = By.name("captcha-636");// Evitar repetir logica
+	
+	By localizadorBotonEnviar = By.className("wpcf7-submit");
+	
+	//By localizadorDireccionInvalida = By.xpath("//div[@class='settings-padding']/span");
+	
+	//By localizadorDireccionInvalida = By.className("not-valid-tip");
+	
+	@Before
+	
+	public void setUp() {
+		System.setProperty("webdriver.chrome.driver", "./src/test/resources/chromedriver/chromedriver.exe");
+		driver = new ChromeDriver();
+		driver.manage().window().maximize();
+		driver.get("https://www.consultoriaglobal.com.ar/cgweb/");
+	}
+	
+	@After
+	
+	public void tearDown() throws Exception{
+		driver.quit();
+	}
+	
+	@Test
+	
+	public void completarFormularioDeContacto() throws InterruptedException{
+		
+		driver.findElement(localizadorDeBotonContactenos).click(); // Clickea en contactenos
+		Thread.sleep(2000); // 2 seg de espera
+		
+		if(driver.findElement(localizadorDePaginaContactenos).isDisplayed()) { // Si entro a contactenos
+			driver.findElement(localizadorDeNombre).sendKeys("Leonardo Corrales");
+			driver.findElement(localizadorDeEmail).sendKeys("direccionInvalida@gmail.com.");
+			driver.findElement(localizadorDeAsunto).sendKeys("Busco empleo de java developer");
+			driver.findElement(localizadorDeCaptcha).sendKeys("----");
+			
+			driver.findElement(localizadorBotonEnviar).click();
+			
+			List<WebElement> spans = driver.findElements(By.xpath("//span[@class='wpcf7-not-valid-tip']"));
+			
+			assertEquals("La dirección e-mail parece inválida.", spans.get(1).getText());
+			
+		}else {
+			System.out.print("No entro a la pagina de contacto");
+		}
+		
+	}
+}

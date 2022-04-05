@@ -1,0 +1,22 @@
+package AutomatizacionJavaSelenium;
+
+import org.openqa.selenium.By;
+
+public class Localizador {
+
+	By localizadorDeBotonContactenos = By.linkText("Contáctenos");
+	By localizadorDePaginaContactenos = By.className("entry-title");
+	By localizadorDeNombre = By.name("your-name");
+	By localizadorDeEmail = By.name("your-email");
+	By localizadorDeAsunto = By.name("your-subject");
+	By localizadorDeMensaje = By.name("your-message");
+	By localizadorDeCaptcha = By.name("captcha-636");
+	
+	public By localizarSegunNombre(String unNombre) {
+		return By.name(unNombre);
+		
+	}
+	
+	By localizadorBotonEnviar = By.className("wpcf7-submit");
+}
+ 

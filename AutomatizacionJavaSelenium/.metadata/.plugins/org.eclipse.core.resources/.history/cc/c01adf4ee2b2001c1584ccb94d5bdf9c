@@ -1,0 +1,23 @@
+package AutomatizacionJavaSelenium;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+public class Localizador {
+	
+	static WebDriver driver;
+
+	static By localizadorDeBotonContactenos = By.linkText("Contáctenos");
+	static By localizadorDePaginaContactenos = By.className("entry-title");
+	
+	public static By localizarSegunNombre(String unNombre) {
+		return By.name(unNombre);
+		
+	}
+	
+	static By localizadorBotonEnviar = By.className("wpcf7-submit");
+	
+	WebElement localizadorDireccionInvalida = driver.findElement(By.xpath("//*[@id=\"wpcf7-f1297-p370-o1\"]/form/p[2]/span/span"));
+}
+ 

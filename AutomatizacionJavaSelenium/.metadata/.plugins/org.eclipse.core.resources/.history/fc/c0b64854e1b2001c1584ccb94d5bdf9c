@@ -1,0 +1,43 @@
+package AutomatizacionJavaSelenium;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.openqa.selenium.WebDriver;
+
+public class MainTest {
+
+	private WebDriver driver;
+	
+	@Before
+	
+	public void setUp() {
+		driver = Utilidades.configuracion(driver);
+	}
+	
+	@After
+	
+	public void tearDown() throws Exception{
+		driver.quit();
+	}
+	
+	@Test
+	
+	public void completarFormularioDeContacto(Localizador unLocalizador) throws InterruptedException{
+		
+		Driver.entrarAContactenos(driver, unLocalizador);// Clickea en contactenos
+		Thread.sleep(2000); // 2 seg de espera
+		
+		if(Driver.logroEntrarAContactenos(driver,unLocalizador)) { // Si entro a contactenos
+			
+			Driver.llenarCamposYEnviar(driver,unLocalizador);
+			Thread.sleep(2000);
+			
+			Driver.chequeoDireccionInvalida(unLocalizador);
+			
+		}else {
+			System.out.print("No entro a la pagina de contacto");
+		}
+		
+	}
+}
